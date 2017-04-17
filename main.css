@@ -1,0 +1,30 @@
+body{
+	color: #ff0;
+	background-color: #0f0;
+}
+
+div#nav{
+	color: white;
+	background-color:#f0f;
+	width: 90%;
+	height: 50px;
+	margin: auto;
+	margin-bottom: 10px;
+}
+
+div#mainBody{
+	background-color: #00f;
+	width: 90%;
+	margin: auto;
+	padding: 20px
+}
+#logo{
+	margin: 3px;
+	width: 44px;
+	height: 44px;
+}
+
+#nav>a{
+  color: white;
+  
+}

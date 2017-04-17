@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TO-DO List</title>
+		<link rel="stylesheet" type="text/css" href="/main.css">
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+		
+		<script>
+			function load() {
+				var items = localStorage.items;
+				var checks = localStorage.checks;
+				if (items == null) {
+					document.getElementById("text1").focus();
+				} else{
+					var list = document.getElementById("list");
+					list.innerHTML = "<hr>";
+					items = items.split(",,,");
+					checks = checks.split(",,,");
+					for(var i = 0; i < items.length - 1; i++) {
+						var check = checks[i];
+						
+						
+						newItem(items[i], check);
+						
+						
+						
+						
+					}
+				}
+				
+			}
+			
+		</script>
+		
+		<style>
+			input {
+				margin: 5px;
+			}
+			button {
+				margin: 5px;
+			}
+			input[type=text] {
+				border-left: 5px outset #ddd;
+			}
+			
+			input:hover[type=text] {
+				border-left: 5px inset #ddd;
+			}
+			
+			input:focus[type=text] {
+				border-style-left: inset;
+			}
+			
+			ul {
+				list-style-type: none;
+				background-color: lightGrey;
+				width: 400px;
+				padding: 10px;
+			}
+			input[type=button] {
+			border:none;
+			background-color: #fff;
+			}
+			
+			
+			
+			
+		</style>
+		<script src="/nav.js" type="text/javascript"></script>
+	</head>
+	<body onLoad="load()">
+		<script>
+			function enterItem(event) {
+				if(event.keyCode == 13) {
+					newItem();
+				}
+			}
+			
+			function newItem(value, checked) {
+				
+				
+				
+				var list = document.getElementById("list");
+				num = list.childElementCount;
+				
+				var item = document.createElement("LI"); 
+				item.setAttribute("id","item" + (num + 1));
+				item.setAttribute("class", "item");
+				
+				var check = document.createElement("input"); 
+				check.setAttribute("type","checkbox");
+				check.setAttribute("id","check" + (num + 1));
+				check.setAttribute("class", "check");
+				if (checked == "true") {
+					check.setAttribute("checked", true);
+				}
+				
+				
+				var text = document.createElement("input");
+				text.setAttribute("type","text");
+				text.setAttribute("id","text" + (num + 1));
+				text.setAttribute("spellcheck","true");
+				text.setAttribute("class", "text");
+				text.setAttribute("placeholder","Click to enter your task.");
+				text.setAttribute("Size","40");
+				text.setAttribute("onKeyPress","enterItem(event)")
+				if (value != null) {
+					text.setAttribute("value",value);
+				}
+				
+				var button = document.createElement("input");
+				button.setAttribute("type","button");
+				button.setAttribute("id","button" + (num + 1));
+				button.setAttribute("value","X")
+				button.setAttribute("class", "button");
+				button.setAttribute("onClick","deleteItem(" + (num + 1) + ")");
+				
+				var line = document.createElement("hr");
+				
+				item.appendChild(check);
+				item.appendChild(text);
+				item.appendChild(button);
+				item.appendChild(line);
+				
+				list.appendChild(item);
+				
+				text.focus();
+			}
+			
+			function deleteItem(num) {
+				
+				
+				item = document.getElementById("item" + num);
+				
+				list = document.getElementById("list");
+				
+				list.removeChild(item);
+				
+				//saveItems();
+			}
+			
+			function saveItems() {
+				list = document.getElementById("list");
+				
+				var text = "";
+				var check = "";
+				for (var i = 0; i < list.childElementCount; i++) {
+					var item = list.children[i]
+					//alert(item.nodeName);
+					if (item.nodeName == "LI") {
+						text += item.children[1].value + ",,,";
+						check += item.children[0].checked + ",,,";
+						
+						
+					} 
+				}
+				localStorage.items = text;
+				localStorage.checks = check;
+				
+			}
+			
+		</script>
+		
+		<div id="nav">
+			
+		</div>
+		<div id="mainBody">
+			<button onClick="newItem()">New List Item</button>
+			<button onClick="saveItems()">Save</button>
+			
+			<div style="width: 500px; height: 700px; overflow: auto;">
+				
+				
+				
+				<ul id="list">
+					<hr>
+					<li id="item1" class="item">
+						
+						<input type="checkbox" id="check1" class="check"><input type="text" id="text1" spellcheck="true" class="text" placeholder="Click to enter your task." size="40"><input type="button" id="button1" value="X" class="button" onClick="deleteItem(1)">
+						<hr>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
