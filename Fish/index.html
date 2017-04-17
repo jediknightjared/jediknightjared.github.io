@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Fish Game! - Menu </title>
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<script>
+			
+			function WIP() {
+				alert("This Game is still a Work In Progress at this present time. Please Play a different Game!");
+				window.location = "/games.html";
+				
+			}
+			function start(){
+				sjs.open("target", 1800,800);
+
+				//Background
+				var background = new sjs.Image("Images/background.png")
+				background.setSize(sjs.getWidth(), sjs.getHeight());
+
+				//Menu Text
+				var menu_text = new sjs.Text("MENU",28, "blue");
+				menu_text.centerH();
+				
+				//Start Button
+				var startBtn = new sjs.Button("Play", function() {
+					window.location = "fish.html";
+				});
+				startBtn.center();
+
+				//Info
+				var info_text = new sjs.Text("Created By Jared Peterson",20,"black");
+				info_text.bottom().centerH();	
+
+				//Music
+				var playM = new Audio('Music/only.mp3'); 
+				playM.play();
+				var musicOn = true;
+				var toggle = true; 
+
+				sjs.keyDown(SPACE_KEY, function(){
+					if(toggle == true){
+						if(musicOn == false){
+							playM.play();
+							musicOn = true;
+						} else {
+							playM.pause();
+							musicOn = false;
+						}
+						toggle = false;
+							setTimeout(function(){
+								toggle = true;
+							},1000);
+					} //end if toggle statement
+				}); //end keyDown function
+
+			}
+		</script>
+	</head>
+	<body onload="WIP()">
+		<h1> Fish </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>

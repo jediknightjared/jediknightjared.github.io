@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> Pong - Menu </title>
+	<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+	<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+	<script>
+		function start() {
+			sjs.open();
+
+			//Title
+			var menuText = new sjs.Text("Pong!", 50, "Black");
+			menuText.centerH();
+
+			//Play Button
+			var button = new sjs.Button("Play!", function() {
+				window.location = "pong.html";
+			});
+			button.center();
+
+			//Credits
+			var menuText = new sjs.Text("By Jared Peterson", 50, "Black");
+			menuText.center().bottom();
+		} //end start
+	</script>
+</head>
+
+<body onload="start()">
+	<h1> Menu </h1>
+
+	<div id="target" style="margin:auto;background:grey;"></div>
+</body>
+
+</html>

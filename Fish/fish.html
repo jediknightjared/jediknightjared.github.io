@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Fish Game! - Play </title>
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<script>
+			
+			function WIP() {
+				alert("This Game is still a Work In Progress at this present time. Please Play a different Game!");
+				window.location = "/games.html";
+				
+			}
+			function start(){
+				sjs.open("target",1800,800);
+
+				//Background
+				var background = new sjs.Image("Images/background.png")
+				background.setSize(sjs.getWidth(), sjs.getHeight());
+
+				
+				
+
+
+				//Player
+				var player = new sjs.Image("Images/bluefish_right.png")
+				player.type = "player";
+				player.setSize(100,76);
+				player.setHFlipImages("Images/bluefish_left.png","Images/bluefish_right.png");
+				player.friction = 0.2;
+				player.accel = 0.3;
+				player.center();
+
+				//Score
+				localStorage.score = 0;
+				localStorage.size = 7600;
+
+
+				//Set Controls
+				sjs.keyDown(RIGHT_KEY, function(){ 
+					player.faceRight();
+					player.pushRight();
+				});
+				sjs.keyDown(LEFT_KEY, function(){ 
+					player.faceLeft();
+					player.pushLeft();
+				});
+				sjs.keyDown(UP_KEY, function(){ 
+					player.pushUp();
+				});
+				sjs.keyDown(DOWN_KEY, function(){ 
+					player.pushDown();
+				});
+
+				//Spawn Crumbs
+				setInterval(function(){
+					var newCrumb = new sjs.Image("Images/crumbs.png");
+					newCrumb.type = "crumbs";
+					newCrumb.setGravity();
+					newCrumb.centerH();
+					newCrumb.noBounds = true;
+					newCrumb.friction = 0.5;
+					newCrumb.setSize(12,20);
+				}, 5000);
+
+
+				//Destroy Crumbs
+				sjs.onHit("crumbs","bottom_screen",function(crumbs,bottom_screen) {
+					crumbs.destroy();
+				});
+
+
+				//Eat Food
+				sjs.onHit("player","crumbs",function(player,crumbs) {
+					player.grow(40,40);
+					size = player.getWidth()*player.getHeight();
+					size_txt.setText("Size: " + size);
+					setTimeout(function() {
+						player.grow(-40,-40);
+						size = player.getWidth()*player.getHeight();
+						size_txt.setText("Size: " + size); 
+					},4000);
+					crumbs.destroy();
+				});
+
+				//Spawn Enemies
+				setInterval(function() {
+					if (Math.random() > 0.5) {
+						var enemy = new sjs.Image("Images/sword_right.png");
+						var size = 0.1 + Math.random() * 1;
+
+						enemy.type = "enemy";
+						enemy.setSize(player.getWidth(),player.getHeight());
+						enemy.friction = 0;
+						enemy.moveTo(-enemy.getWidth(), Math.random()*(enemy.getClamp().y));
+						enemy.scaleSize(size);
+						enemy.noBounds = true;
+						enemy.pushRight(1.2-size);
+					} else {
+						var enemy = new sjs.Image("Images/sword_left.png");
+						var size = 0.1 + Math.random() * 1;
+
+						enemy.type = "enemy";
+						enemy.setSize(player.getWidth(),player.getHeight());
+						enemy.friction = 0;
+						enemy.moveTo(sjs.getWidth(), Math.random()*(enemy.getClamp().y));
+						enemy.scaleSize(size);
+						enemy.noBounds = true;
+						enemy.pushLeft(1.2-size);					}
+				}, 1000);
+
+				//Offset Screen
+				sjs.right_screen.offset(8000);
+				sjs.left_screen.offset(-8000);
+
+				//Destroy Enemies when off screen
+				sjs.onHit("enemy",["left_screen","right_screen"], function(enemy,side) {
+					enemy.destroy();
+				});
+
+				//Score
+				var score = 0;
+				var score_txt = new sjs.Text("Score: " + score,21,"blue");
+
+				//Size
+				var size = player.getWidth()*player.getHeight();
+				var size_txt = new sjs.Text("Size: " + size, 21,"blue");
+				size_txt.centerH();
+
+
+				//Collide with Enemy
+				sjs.onHit("player","enemy", function(player,enemy){
+					if(player.getWidth()*player.getHeight() > enemy.getWidth()*enemy.getHeight()) {
+
+						player.grow(enemy.getHeight()/10, enemy.getWidth()/10);
+						//Update Score
+						score += 1;
+						score_txt.setText("Score: " + score);
+						localStorage.setItem("score",score);
+						size = player.getWidth()*player.getHeight();
+						size_txt.setText("Size: " + size);
+						localStorage.setItem("size",size);
+						player.accel -= 0.0001;
+
+						if (score >= 50) {
+							sjs.destroyAll("enemy");
+							window.location = "win.html";
+						}
+
+					} else {
+						player.destroy();
+						window.location = "gameover.html";
+					}
+					enemy.destroy();
+				});
+
+
+				var playM = new Audio('Music/mad_robots.mp3'); 
+				playM.play();
+				var musicOn = true;
+				var toggle = true; 
+
+				sjs.keyDown(SPACE_KEY, function(){
+					if(toggle == true){
+						if(musicOn == false){
+							playM.play();
+							musicOn = true;
+						} else {
+							playM.pause();
+							musicOn = false;
+						}
+						toggle = false;
+							setTimeout(function(){
+								toggle = true;
+							},1000);
+					} //end if toggle statement
+				}); //end keyDown function
+
+				//Music text
+				var music_text = new sjs.Text("Press the SPACEBAR to toggle music.");
+				music_text.center();
+
+				setTimeout(function() {
+					music_text.destroy();
+				}, 4000);
+			} //end start 
+		</script>
+	</head> 
+	<body onload="WIP()"> 
+		<h1> Fish Game! </h1>
+	
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>

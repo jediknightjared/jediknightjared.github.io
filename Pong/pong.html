@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> Pong - Play! </title>
+	<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+	<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+	<script>
+		function start() {
+			sjs.open();
+			
+			//Sounds
+			var bounceSound = new Audio("Music/techno.mp3");
+			
+			//Ball Object and Properties
+			var ball = new sjs.Image("Images/pizza.png");
+			ball.type = "ball";
+			ball.setSize(50, 50);
+			ball.center();
+			ball.friction = 0;
+			ball.bounce();
+			
+			//Paddle 1
+			var paddle1 = new sjs.Image("Images/paddle.png");
+			paddle1.type = "paddle1";
+			paddle1.setSize("120", "20");
+			paddle1.center().top();
+			
+			//Paddle 2
+			var paddle2 = new sjs.Image("Images/paddle2.png");
+			paddle2.type = "paddle2";
+			paddle2.setSize("120", "20");
+			paddle2.center().bottom();
+			
+			//Handle Score
+			var score = 0;
+			var scoreTxt = new sjs.Text("Score: 0", 21, "blue");
+			
+			
+			//Handle Collision
+			sjs.onHit("ball", "paddle1", function(ball, paddle) {
+				bounceSound.play();
+				score = score + 1;
+				scoreTxt.setText("Score: " + score);
+				ball.stop();
+				randomizeBallDown();
+			});
+			
+			sjs.onHit("ball", "paddle2", function(ball, paddle) {
+				bounceSound.play();
+				score = score + 1;
+				scoreTxt.setText("Score: " + score);
+				ball.stop();
+				randomizeBallUp();
+			});
+			
+			
+			//Controls
+			sjs.keyDown(LEFT_KEY, function() {
+				paddle1.pushLeft();
+				paddle2.pushLeft();
+			});
+			
+			sjs.keyDown(RIGHT_KEY, function() {
+				paddle1.pushRight();
+				paddle2.pushRight();
+			});
+			
+			
+			
+			
+			//Handle Game Over
+			sjs.onHit("ball", ["top_screen", "bottom_screen"], function() {
+				setTimeout(function(){
+					window.location = "gameover.html";
+				},700);
+			});
+			
+			
+			//Start Countdown
+			var start = 3;
+			var start_txt = new sjs.Text(start, 50, "black");
+			start_txt.center();
+			setTimeout(function() {
+				start -= 1;
+				start_txt.setText(start);
+				setTimeout(function() {
+					start -= 1;
+					start_txt.setText(start);
+					setTimeout(function() {
+						start -= 1;
+						start_txt.setText(start);
+						start_txt.destroy();
+						randomizeBall();
+					}, 1000);
+				}, 1000);
+			}, 1000);
+			
+			
+			function randomizeBall () {
+				var rand = Math.random();
+				if (rand > 0.25) {
+					randomizeBallUp();
+				} else {
+					randomizeBallDown();
+				}
+				
+			}
+			function randomizeBallUp () {
+				ball.pushUp(5);
+				var rand = Math.random();
+				alert
+				if (rand > 0.5) {
+					rand = Math.round((Math.random()*4)+2)
+					ball.pushRight(rand);
+				} else {
+					rand = Math.round((Math.random()*4)+2)
+					ball.pushLeft(rand);
+				}
+				
+			}
+			function randomizeBallDown () {
+				ball.pushDown(5);
+				var rand = Math.random();
+				if (rand > 0.5) {
+					rand = Math.round(Math.random()*4+2)
+					ball.pushRight(rand);
+				} else {
+					rand = Math.round((Math.random()*4)+2)
+					ball.pushLeft(rand);
+				}
+				
+			}
+			
+			
+			
+			
+		}
+	</script>
+</head>
+
+<body onload="start()">
+	<h1> Pong Game </h1>
+	<div id="target" style="margin:auto;background:grey;"></div>
+</body>
+
+</html>

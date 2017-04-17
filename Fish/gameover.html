@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Fish Game! - Gameover </title>
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<script>
+			function start(){
+				sjs.open("target", 1800,800);
+
+				//Background
+				var background = new sjs.Image("Images/background.png")
+				background.setSize(sjs.getWidth(), sjs.getHeight());
+
+				//Gameover Text
+				var go_text = new sjs.Text("GAME OVER!",28, "blue");
+				go_text.centerH();
+
+				//You Died Text
+				var yd_text = new sjs.Text("You Died!",28, "red");
+				yd_text.center().offset(0,-200);
+
+				//Score
+				var score_text = new sjs.Text("Score: " + localStorage.score, 28, "red");
+				score_text.center().offset(0,-100);
+				var size_text = new sjs.Text("Size: " + localStorage.size, 28, "red");
+				size_text.center().offset(0,-130);
+				
+				//Restart Button
+				var restartBtn = new sjs.Button("Restart", function() {
+					window.location = "fish.html";
+				});
+				restartBtn.center().offset(50);
+
+				//Menu Button
+				var menuBtn = new sjs.Button("Menu", function() {
+					window.location = "index.html";
+				});
+				menuBtn.center().offset(-50);
+			}
+		</script>
+	</head>
+	<body onload="start()">
+		<h1> Fish </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>

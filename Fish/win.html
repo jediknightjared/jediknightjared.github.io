@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+		<title> Fish Game! - Win </title>
+		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<script>
+			function start(){
+				sjs.open("target", 1800,800);
+
+				//Background
+				var background = new sjs.Image("Images/background.png")
+				background.setSize(sjs.getWidth(), sjs.getHeight());
+
+				//Gameover Text
+				var yw_text = new sjs.Text("YOU WIN!",28, "blue");
+				yw_text.centerH();
+
+				//Score
+				var score_text = new sjs.Text("Score: " + localStorage.score, 28, "blue");
+				score_text.center().offset(0,-100);
+				var size_text = new sjs.Text("Size: " + localStorage.size, 28, "blue");
+				size_text.center().offset(0,-130);
+				
+				//Restart Button
+				var restartBtn = new sjs.Button("Restart", function() {
+					window.location = "fish.html";
+				});
+				restartBtn.center().offset(50);
+
+				//Menu Button
+				var menuBtn = new sjs.Button("Menu", function() {
+					window.location = "index.html";
+				});
+				menuBtn.center().offset(-50);
+
+				//Music
+				var playM = new Audio('Music/infinite_strings.mp3'); 
+				playM.play();
+				var musicOn = true;
+				var toggle = true; 
+
+				sjs.keyDown(SPACE_KEY, function(){
+					if(toggle == true){
+						if(musicOn == false){
+							playM.play();
+							musicOn = true;
+						} else {
+							playM.pause();
+							musicOn = false;
+						}
+						toggle = false;
+							setTimeout(function(){
+								toggle = true;
+							},1000);
+					} //end if toggle statement
+				}); //end keyDown function
+
+				
+			}
+		</script>
+	</head>
+	<body onload="start()">
+		<h1> Fish </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
