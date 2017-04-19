@@ -71,9 +71,19 @@
 			
 			//Handle Game Over
 			sjs.onHit("ball", ["top_screen", "bottom_screen"], function() {
+				localStorage.score = score;
+				if (localStorage.highScore) {
+					if (score > localStorage.highScore) {
+						localStorage.highScore = score;
+					}
+					
+				} else {
+					localStorage.highScore = score;
+				}
+				
 				setTimeout(function(){
 					window.location = "gameover.html";
-				},700);
+				},500);
 			});
 			
 			
