@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="https://jediknightjared.github.io/main.css">
+	<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+	<title> Platform Game </title>
+	<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+	<script>
+		var level = [];
+		
+		function start() {
+			sjs.open("target", 800, 500);
+			
+// 			var platform = new sjs.Image("Images/platform.png");
+// 			level.push(platform);
+// 			platform.type = "platform";
+// 			platform.setHeight(30);
+// 			platform.center().offset(-sjs.gx, 10);
+			
+			//Background
+			var background = new sjs.Image("Images/background.png");
+			background.setSize(2500, 500);
+			
+			//Bottom
+			var bottom = new sjs.Image("Images/background.png");
+			bottom.setSize(2500, 1);
+			bottom.type = "bottom";
+			bottom.bottom();
+			
+			function show() {
+				alert(sjs.saveImageArray(level));
+				console.log(sjs.saveImageArray(level));
+				
+			}
+			
+			var menu = new sjs.Button("<<",function(){
+				window.location = "index.html";
+			});
+
+			var testBtn = new sjs.Button("Test Level", function() {
+				localStorage.setItem('level', sjs.saveImageArray(level));
+				window.open("test.html");
+
+			});
+			testBtn.moveTo(100, 0);
+
+			//Player Properties
+			var player = new sjs.Image("Images/r_idle.png");
+			player.type = "player";
+			player.setSize(85, 94);
+			player.setHFlipImages('Images/l_idle.png', 'Images/r_idle.png');
+			player.setGravity();
+			player.friction = 0.3;
+			player.bottom();
+			player.faceRight();
+			
+			
+			
+			
+			//Player movement controls
+			
+			//Right
+			var r_walk = 1;
+			var r_facing = true;
+			sjs.keyDown(RIGHT_KEY, function() {
+				r_facing = true;
+				if (r_walk == 1) {
+					player.setImage("Images/r_walk-0.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 2;
+				} else if (r_walk == 2) {
+					player.setImage("Images/r_walk-1.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 3;
+				} else if (r_walk == 3) {
+					player.setImage("Images/r_walk-2.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 4;
+				} else if (r_walk == 4) {
+					player.setImage("Images/r_walk-3.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 5;
+				} else if (r_walk == 5) {
+					player.setImage("Images/r_walk-4.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 6;
+				} else if (r_walk == 6) {
+					player.setImage("Images/r_walk-5.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 7;
+				} else if (r_walk == 7) {
+					player.setImage("Images/r_walk-6.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 8;
+				} else if (r_walk == 8) {
+					player.setImage("Images/r_walk-7.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 9;
+				} else if (r_walk == 9) {
+					player.setImage("Images/r_walk-0.png");
+					player.faceRight();
+					player.pushRight(1.5);
+					r_walk = 1;
+				} else {
+					player.setImage("Images/r_jump.png");
+					player.pushRight(1.5);
+				}
+
+			});
+
+			//Left
+			var l_walk = 1;
+			var l_facing = true;
+			sjs.keyDown(LEFT_KEY, function() {
+				l_facing = true;
+				r_facing = false;
+				if (l_walk == 1) {
+					player.setImage("Images/l_walk-0.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 2;
+				} else if (l_walk == 2) {
+					player.setImage("Images/l_walk-1.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 3;
+				} else if (l_walk == 3) {
+					player.setImage("Images/l_walk-2.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 4;
+				} else if (l_walk == 4) {
+					player.setImage("Images/l_walk-3.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 5;
+				} else if (l_walk == 5) {
+					player.setImage("Images/l_walk-4.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 6;
+				} else if (l_walk == 6) {
+					player.setImage("Images/l_walk-5.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 7;
+				} else if (l_walk == 7) {
+					player.setImage("Images/l_walk-6.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 8;
+				} else if (l_walk == 8) {
+					player.setImage("Images/l_walk-7.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 9;
+				} else if (l_walk == 9) {
+					player.setImage("Images/l_walk-0.png");
+					player.faceLeft();
+					player.pushLeft(1.5);
+					l_walk = 1;
+				} else {
+					player.setImage("Images/l_jump.png");
+					player.pushLeft(1.5);
+				}
+				
+			});
+
+
+			//Jumping
+			var canJump = true;
+			sjs.keyDown(UP_KEY, function() {
+				if (canJump) {
+					r_walk = 10;
+					l_walk = 10;
+					canJump = false;
+					player.pushUp(45);
+					player.setGravity(3);
+
+					if (r_facing) {
+						player.setImage("Images/r_jump.png")
+					} else {
+						player.setImage("Images/l_jump.png")
+					}
+				}
+
+			});
+			
+			//stop
+			window.addEventListener("keyup", function(e) {
+				if (e.keyCode == RIGHT_KEY) {
+					player.setImage("Images/r_idle.png");
+					r_walk = 1;
+					l_walk = 1;
+				} else if (e.keyCode == LEFT_KEY) {
+					player.setImage("Images/l_idle.png");
+					r_walk = 1;
+					l_walk = 1;
+				} //end if statement
+			}); //end EventListener function
+			
+			
+			//Shoot
+			sjs.keyDown(DOWN_KEY, function(){
+				if(canShoot) {
+					canShoot = false;
+					var laser = new sjs.Image("Images/laser.png");
+					laser.type = "laser";
+					laser.setSize(100,50);
+					laser.friction= 0;
+					laser.noBounds= true;
+					if(r_facing == true){
+						laser.moveTo(player.getX()+44,player.getY()+7);
+						laser.pushRight(25.5);
+					} else {
+						laser.moveTo(player.getX()+-60,player.getY()+7);
+						laser.pushLeft(25.5);
+					}
+					setTimeout(function(){
+						canShoot = true;
+					},500);
+				}
+			});
+
+			//Collide with platforms
+			sjs.onHit("player", "platform", function(x, y) {
+				sjs.stoppedBy(x, y);
+				r_walk = 1;
+				l_walk = 1;
+				canJump = true;
+				if (r_facing) {
+					player.setImage("Images/r_idle.png");
+
+				} else {
+					player.setImage("Images/l_idle.png");
+				}
+				
+			});
+			
+			
+			sjs.onHit("enemy","bottom_screen", function(x,y){
+				sjs.stoppedBy(x,y);
+			});
+			
+			sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
+				sjs.bounceOff(x,y);
+			});
+			
+			sjs.onHit("enemy","platform", function(x,y){
+				if(x.isAboveOf(y) == true){
+					sjs.stoppedBy(x,y); 
+				} else {
+					sjs.bounceOff(x,y); 
+				}
+			});
+			
+			sjs.onHit("player","jump_pad", function(x,y){
+				if(x.isAboveOf(y) == true){
+					player.pushUp(60); 
+				} else {
+					sjs.stoppedBy(x,y); 
+				}
+			});
+			
+			sjs.onHit("trash",["platform","jump_pad", "powerUp","score","enemy","flag"], function(x,y){
+				y.destroy();
+				sjs.removeFromArray(level,y);
+			});
+			
+			//Can shoot Variable
+			var canShoot = false;
+			
+			
+			
+			//Collide bottom
+			sjs.onHit("player", "bottom", function(x, y) {
+				
+				canJump = true;
+				r_walk = 1;
+				l_walk = 1;
+				canJump = true;
+				if (r_facing) {
+					player.setImage("Images/r_idle.png");
+
+				} else {
+					player.setImage("Images/l_idle.png");
+				}
+				sjs.stoppedBy(x, y);
+			});
+
+			//Make the player control the camera
+			sjs.scrollable(player, background);
+			
+			var trash = new sjs.Text("Trash",15,"orange");
+			trash.type = "trash";
+			trash.moveTo(720,10);
+			trash.fixed = true;
+			trash.setHeight(60);
+			trash.node.style.background = "green";
+			trash.node.style.borderTop = "4px solid yellow";
+		} //end start function
+
+		//Add new platform
+		function platform() {
+			var platform = new sjs.Image("Images/platform.png");
+			level.push(platform);
+			platform.type = "platform";
+			platform.setHeight(30);
+			platform.center().offset(-sjs.gx, 10);
+			platform.onMouseDown(function() {
+				platform.draggable();
+				platform.follow(sjs.mouse);
+			});
+		};
+		
+		function powerUp() {
+			var powerUp = new sjs.Image("Images/power_up.png");
+			level.push(powerUp);
+			powerUp.type = "powerUp"; 
+			powerUp.setHeight(30);
+			powerUp.center().offset(-sjs.gx,10);
+
+			powerUp.onMouseDown(function(){
+			powerUp.draggable();
+			powerUp.follow(sjs.mouse);
+			});
+			
+		}
+		
+		function score(){
+			var score = new sjs.Image("Images/score.gif");
+			level.push(score);
+			score.type = "score"; 
+			score.setHeight(30);
+			score.center().offset(-sjs.gx,10);
+			score.onMouseDown(function(){
+			score.draggable();
+			score.follow(sjs.mouse);
+			});
+		}
+
+
+		function flag(){
+			var flag = new sjs.Image("Images/flag_none.png");
+			level.push(flag);
+			flag.type = "flag"; 
+			flag.setHeight(75);
+			flag.setWidth(15);
+			flag.center().offset(-sjs.gx,10);
+			flag.onMouseDown(function(){
+			flag.draggable();
+			flag.follow(sjs.mouse);
+			});
+		}
+		
+		function enemy(){
+			var enemy = new sjs.Image("Images/r_enemy.gif");
+			level.push(enemy);
+			enemy.type = "enemy"; 
+			enemy.center().offset(-sjs.gx,10);
+			enemy.friction = 0; 
+			enemy.noBounds = true; 
+			enemy.setHFlipImages("Images/l_enemy.gif","Images/r_enemy.gif");
+			enemy.onMouseDown(function(){
+			enemy.follow(sjs.mouse);
+			enemy.removeGravity();
+			enemy.stop();
+			});
+			enemy.onMouseUp(function(){
+			enemy.unfollow(sjs.mouse);
+			enemy.setGravity();
+			enemy.pushHFacing();
+			enemy.accel=.5;
+			});
+		}
+		
+		function jumpPad(){
+			var jump_pad = new sjs.Image("Images/jump_pad.png");
+			level.push(jump_pad);
+			jump_pad.type = "jump_pad"; 
+			jump_pad.center().offset(-sjs.gx,10);
+			jump_pad.setHeight(15); 
+			jump_pad.onMouseDown(function(){
+			jump_pad.draggable();
+			jump_pad.follow(sjs.mouse);
+			});
+		} 
+	</script>
+</head>
+
+<body onload="start()">
+	
+	<div id="nav">
+		<img src="https://jediknightjared.github.io/Images/Logo.png" id="logo">
+	</div>
+	<div id="mainBody">
+		<center>
+			<input type="image" src="Images/platform.png" onClick="platform()">
+			<input type="image" src="Images/power_up.png" onclick="powerUp()">
+			<input type="image" src="Images/score.gif" onclick="score()">
+			<input type="image" src="Images/flag_bad.png" onclick="flag()">
+			<input type="image" src="Images/r_enemy.gif" onclick="enemy()">
+			<input type="image" src="Images/jump_pad.png" onclick="jumpPad()">
+		</center>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+
+	</div>
+</body>
+
+</html>

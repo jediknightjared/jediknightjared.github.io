@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="https://jediknightjared.github.io/main.css">
+	<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+	<title> Platform Game </title>
+	<script src="platformer.js"></script>
+	<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+	<script>
+		var level = [];
+
+		function start() {
+			sjs.open("target", 800, 500);
+			
+			//Background
+			var background = new sjs.Image("Images/background.png");
+			background.setSize(2500, 500);
+			
+			//Title
+			var title = new sjs.Text("Space Platformer",20,"blue");
+			title.centerH().offset(0,50);
+			
+			//Credits
+			var credits = new sjs.Text("By: Jared Peterson",10,"blue")
+			credits.bottom().centerH();
+			
+			
+			
+			//Menu
+			var menu = new sjs.Button("<<",function(){
+				window.location = "index.html";
+			});
+			menu.offset(20,20);
+			
+			
+			for (var i = 1; i <= levels; i++) {
+				var button = new sjs.Button(i,function(){
+					window.location = "level"+button.node.innerHTML+".html";
+				});
+				button.offset(i*30,60);
+			}
+			
+			//1
+			//var one = new sjs.Button("1",function(){
+			//	window.location = levels[1];
+			//});
+			//one.centerH().offset(0,180);
+			
+			//Editor
+			//var editor = new sjs.Button("Editor!",function(){
+				//window.location = "editor.html"
+			//});
+			//editor.centerH().offset(0,240);
+			
+		} 
+	</script>
+</head>
+
+<body onload="start()">
+	
+	<div id="nav">
+		<img src="https://jediknightjared.github.io/Images/Logo.png" id="logo">
+	</div>
+	<div id="mainBody">
+		
+		
+		<div id="target" style="margin:auto;background:grey;"></div>
+		
+	</div>
+</body>
+
+</html>
