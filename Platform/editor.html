@@ -38,6 +38,10 @@
 			bottom.type = "bottom";
 			bottom.bottom();
 			
+			if (!localStorage.level) {
+				localStorage.level = "[]";
+			}
+			
 			var items = sjs.loadImageArray(localStorage.getItem('level'));
 			
 			items.forEach(load);
