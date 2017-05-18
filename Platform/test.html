@@ -217,17 +217,21 @@
 				});
 				
 				//Collide with platforms
-				sjs.onHit("player","platform", function(x,y){
+				sjs.onHit("player","platform", function(player,platform){
 					r_walk = 1;
 					l_walk = 1;
-					canJump = true;
+					if (player.isTopOf(platform)) {
+						canJump = true;
+					}
+					
 					if (r_facing) {
 						player.setImage("Images/r_idle.png");
 
 					} else {
 						player.setImage("Images/l_idle.png");
 					}
-					sjs.stoppedBy(x,y);
+					
+					sjs.stoppedBy(player,platform);
 				});
 				
 				//Collide bottom

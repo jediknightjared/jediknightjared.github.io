@@ -162,7 +162,7 @@
 						canJump = false;
 						player.pushUp(45);
 						player.setGravity(3);
-
+						
 						if (r_facing) {
 							player.setImage("Images/r_jump.png")
 						} else {
@@ -170,9 +170,9 @@
 						}
 						
 					}
-
+					
 				});
-
+				
 				window.addEventListener("keyup", function(e) {
 					if (e.keyCode == RIGHT_KEY) {
 						player.setImage("Images/r_idle.png");
@@ -186,20 +186,20 @@
 				}); //end EventListener function
 				
 				sjs.onHit("enemy","bottom_screen", function(x,y){
-				sjs.stoppedBy(x,y);
-			});
-			
-			sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
-				sjs.bounceOff(x,y);
-			});
-			
-			sjs.onHit("enemy","platform", function(x,y){
-				if(x.isAboveOf(y) == true){
-					sjs.stoppedBy(x,y); 
-				} else {
-					sjs.bounceOff(x,y); 
-				}
-			});
+					sjs.stoppedBy(x,y);
+				});
+				
+				sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
+					sjs.bounceOff(x,y);
+				});
+				
+				sjs.onHit("enemy","platform", function(x,y){
+					if(x.isAboveOf(y) == true){
+						sjs.stoppedBy(x,y); 
+					} else {
+						sjs.bounceOff(x,y); 
+					}
+				});
 				
 				sjs.onHit("player","jump_pad", function(x,y){
 				if(x.isAboveOf(y) == true){
@@ -215,17 +215,21 @@
 			});
 
 				//Collide with platforms
-				sjs.onHit("player","platform", function(x,y){
+				sjs.onHit("player","platform", function(player,platform){
 					r_walk = 1;
 					l_walk = 1;
-					canJump = true;
+					if (player.isTopOf(platform)) {
+						canJump = true;
+					}
+					
 					if (r_facing) {
 						player.setImage("Images/r_idle.png");
 
 					} else {
 						player.setImage("Images/l_idle.png");
 					}
-					sjs.stoppedBy(x,y);
+					
+					sjs.stoppedBy(player,platform);
 				});
 
 				//Collide bottom
