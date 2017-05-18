@@ -4,6 +4,7 @@
 		<title> Level 1 </title>
 		<link rel="stylesheet" type="text/css" href="https://jediknightjared.github.io/main.css">
 		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
 		<script>
 			function start(){
 				sjs.open("target",800,500);
@@ -23,6 +24,7 @@
 					window.location = "index.html";
 				};
 				menu.offset(10,10);
+				menu.fixed = true;
 				
 				sjs.loadImageArray('[{"width":136,"height":30,"x":155,"y":381,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","type":"platform","friction":0.05,"classType":"Image"},{"width":136,"height":30,"x":376,"y":278,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","type":"platform","friction":0.05,"classType":"Image"},{"width":136,"height":30,"x":582,"y":198,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","type":"platform","friction":0.05,"classType":"Image"},{"width":136,"height":30,"x":827.4411425000296,"y":197,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","type":"platform","friction":0.05,"classType":"Image"}]');
 				
@@ -37,7 +39,25 @@
 				player.bottom();
 				player.faceRight();
 				
+				spawnX = 1;
+				spawnY = 500;
+				
+				function die() {
+					//sjs.destroyAll();
+					//start();
+					
+					player.x = spawnX;
+					player.y = spawnY;
+				}
+				
+				function spawnPoint(x,y){
+					spawnX = x;
+					spawnY = y;
+				}
+				
 				//Player movement controls
+				
+				//Right
 				var r_walk = 1;
 				var r_facing = true;
 				sjs.keyDown(RIGHT_KEY, function() {
@@ -91,10 +111,10 @@
 						player.setImage("Images/r_jump.png");
 						player.pushRight(1.5); 
 					}
-
+					
 				});
-
-
+				
+				//Left
 				var l_walk = 1;
 				var l_facing = true;
 				sjs.keyDown(LEFT_KEY, function() {
@@ -149,10 +169,10 @@
 						player.setImage("Images/l_jump.png");
 						player.pushLeft(1.5); 
 					}
-
+					
 				});
-
-
+				
+				
 				//Jumping
 				var canJump = true;
 				sjs.keyDown(UP_KEY, function() {
@@ -170,9 +190,10 @@
 						}
 						
 					}
-					
+
 				});
 				
+				//stop
 				window.addEventListener("keyup", function(e) {
 					if (e.keyCode == RIGHT_KEY) {
 						player.setImage("Images/r_idle.png");
@@ -185,35 +206,29 @@
 					} //end if statement
 				}); //end EventListener function
 				
-				sjs.onHit("enemy","bottom_screen", function(x,y){
-					sjs.stoppedBy(x,y);
-				});
+				canShoot = false;
 				
-				sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
-					sjs.bounceOff(x,y);
-				});
-				
-				sjs.onHit("enemy","platform", function(x,y){
-					if(x.isAboveOf(y) == true){
-						sjs.stoppedBy(x,y); 
-					} else {
-						sjs.bounceOff(x,y); 
+				sjs.keyDown(DOWN_KEY, function(){
+					if(canShoot) {
+						canShoot = false;
+						var laser = new sjs.Image("Images/laser.png");
+						laser.type = "laser";
+						laser.setSize(100,50);
+						laser.friction= 0;
+						laser.noBounds= true;
+						if(r_facing == true){
+							laser.moveTo(player.getX()+44,player.getY()+7);
+							laser.pushRight(25.5);
+						} else {
+							laser.moveTo(player.getX()+-60,player.getY()+7);
+							laser.pushLeft(25.5);
+						}
+						setTimeout(function(){
+							canShoot = true;
+						},500);
 					}
 				});
 				
-				sjs.onHit("player","jump_pad", function(x,y){
-				if(x.isAboveOf(y) == true){
-					player.pushUp(50); 
-				} else {
-					sjs.stoppedBy(x,y); 
-				}
-			});
-			
-			sjs.onHit("trash",["platform","jump_pad", "powerUp","score","enemy","flag"], function(x,y){
-				y.destroy();
-				sjs.removeFromArray(level,y);
-			});
-
 				//Collide with platforms
 				sjs.onHit("player","platform", function(player,platform){
 					r_walk = 1;
@@ -231,7 +246,7 @@
 					
 					sjs.stoppedBy(player,platform);
 				});
-
+				
 				//Collide bottom
 				sjs.onHit("player","bottom", function(x,y){
 					r_walk = 1;
@@ -243,6 +258,72 @@
 					} else {
 						player.setImage("Images/l_idle.png");
 					}
+					sjs.stoppedBy(x,y);
+					
+				});
+				
+				//Collide JumpPad
+				sjs.onHit("player","jump_pad", function(x,y){
+					if(x.isAboveOf(y) == true){
+						player.pushUp(60); 
+					} else {
+						sjs.stoppedBy(x,y); 
+					}
+				});
+				
+				sjs.onHit("player","enemy", function(player,enemy){
+					die();
+				});
+				
+				sjs.onHit("enemy","bottom_screen", function(x,y){
+					sjs.stoppedBy(x,y);
+				});
+				
+				sjs.onHit("player","flag", function(player,flag) {
+					spawnPoint(flag.x,flag.y);
+					flag.setImage("Images/flag_bad.png");
+					flag.setWidth(29);
+				});
+				
+				sjs.onHit("player","endFlag", function(player,flag) {
+					if (localStorage.levelOn = levels) {
+						window.location = "win.html";
+					} else {
+						localStorage.levelOn += 1;
+						play();
+					}
+				});
+				
+				sjs.onHit("laser","platform", function(laser,platform) {
+					laser.destroy();
+				});
+				
+				sjs.onHit("laser","enemy", function(laser,enemy) {
+					enemy.destroy();
+					laser.destroy();
+				});
+				
+				sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
+				sjs.bounceOff(x,y);
+			});
+				
+				sjs.onHit("enemy","platform", function(x,y){
+				if(x.isAboveOf(y) == true){
+					sjs.stoppedBy(x,y); 
+				} else {
+					sjs.bounceOff(x,y); 
+				}
+			});
+				
+				sjs.onHit("player","powerUp", function (player, PUp) {
+					canShoot = true;
+					PUp.destroy();
+				});
+				
+				sjs.onHit("player","score", function(player,score) {
+					scoreNum += 10;
+					scoreTXT.setText("Score: " + scoreNum);
+					score.destroy();
 					
 				});
 				

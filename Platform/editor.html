@@ -9,6 +9,16 @@
 	<script>
 		var level = [];
 		
+		var ended = false;
+		
+		var player;
+		
+		function show() {
+			alert(sjs.saveImageArray(level));
+			console.log(sjs.saveImageArray(level));
+			
+		}
+		
 		function start() {
 			sjs.open("target", 800, 500);
 			
@@ -28,10 +38,20 @@
 			bottom.type = "bottom";
 			bottom.bottom();
 			
-			function show() {
-				alert(sjs.saveImageArray(level));
-				console.log(sjs.saveImageArray(level));
+			var items = sjs.loadImageArray(localStorage.getItem('level'));
+			
+			items.forEach(load);
+			
+			function load(item,index) {
+				level.push(item);
+				item.onMouseDown(function(){
+					item.draggable();
+					item.follow(sjs.mouse);
+				});
 				
+				if (item.type == "endFlag") {
+					ended = true;
+				}
 			}
 			
 			var menu = new sjs.Button("<<",function(){
@@ -39,18 +59,21 @@
 			});
 
 			var testBtn = new sjs.Button("Test Level", function() {
-				localStorage.setItem('level', sjs.saveImageArray(level));
-				window.open("test.html");
-
+				if (ended) {
+					localStorage.setItem('level', sjs.saveImageArray(level));
+					window.open("test.html");
+				} else {
+					alert("Please add an End Flag before tesing your level");
+				}
 			});
 			testBtn.moveTo(100, 0);
 
 			//Player Properties
-			var player = new sjs.Image("Images/r_idle.png");
+			player = new sjs.Image("Images/r_idle.png");
 			player.type = "player";
 			player.setSize(85, 94);
 			player.setHFlipImages('Images/l_idle.png', 'Images/r_idle.png');
-			player.setGravity();
+			player.setGravity(3);
 			player.friction = 0.3;
 			player.bottom();
 			player.faceRight();
@@ -185,7 +208,6 @@
 					canJump = false;
 					player.pushUp(45);
 					player.setGravity(3);
-
 					if (r_facing) {
 						player.setImage("Images/r_jump.png")
 					} else {
@@ -271,7 +293,10 @@
 				}
 			});
 			
-			sjs.onHit("trash",["platform","jump_pad", "powerUp","score","enemy","flag"], function(x,y){
+			sjs.onHit("trash",["platform","jump_pad", "powerUp","score","enemy","flag","endFlag"], function(x,y){
+				if (y.type == "endFlag") {
+					ended = false;
+				}
 				y.destroy();
 				sjs.removeFromArray(level,y);
 			});
@@ -328,10 +353,9 @@
 			powerUp.type = "powerUp"; 
 			powerUp.setHeight(30);
 			powerUp.center().offset(-sjs.gx,10);
-
-			powerUp.onMouseDown(function(){
-			powerUp.draggable();
-			powerUp.follow(sjs.mouse);
+			powerUp.onMouseDown(function() {
+				powerUp.draggable();
+				powerUp.follow(sjs.mouse);
 			});
 			
 		}
@@ -347,8 +371,7 @@
 			score.follow(sjs.mouse);
 			});
 		}
-
-
+		
 		function flag(){
 			var flag = new sjs.Image("Images/flag_none.png");
 			level.push(flag);
@@ -394,6 +417,24 @@
 			jump_pad.follow(sjs.mouse);
 			});
 		} 
+		
+		function endFlag(){
+			if (!ended) {
+				var flag = new sjs.Image("Images/flag_win.png");
+				level.push(flag);
+				flag.type = "endFlag"; 
+				ended = true;
+				flag.setHeight(75);
+				flag.setWidth(29);
+				flag.center().offset(-sjs.gx,10);
+				flag.onMouseDown(function(){
+					flag.draggable();
+					flag.follow(sjs.mouse);
+				});
+			} else {
+				alert("Only one End Flag allowed.");
+			}
+		}
 	</script>
 </head>
 
@@ -408,6 +449,7 @@
 			<input type="image" src="Images/power_up.png" onclick="powerUp()">
 			<input type="image" src="Images/score.gif" onclick="score()">
 			<input type="image" src="Images/flag_bad.png" onclick="flag()">
+			<input type="image" src="Images/flag_win.png" onclick="endFlag()">
 			<input type="image" src="Images/r_enemy.gif" onclick="enemy()">
 			<input type="image" src="Images/jump_pad.png" onclick="jumpPad()">
 		</center>

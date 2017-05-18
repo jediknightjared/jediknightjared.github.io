@@ -4,6 +4,7 @@
 		<title> Play </title>
 		<link rel="stylesheet" type="text/css" href="https://jediknightjared.github.io/main.css">
 		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
 		<script>
 			function start(){
 				sjs.open("target",800,500);
@@ -16,6 +17,12 @@
 				bottom.setSize(2500, 1);
 				bottom.type = "bottom";
 				bottom.bottom();
+				
+				//Score
+				var scoreNum = 0;
+				var scoreTXT = new sjs.Text("Score: " + scoreNum,23,"white");
+				scoreTXT.centerH().offset(0,10);
+				scoreTXT.fixed = true;
 				
 				sjs.loadImageArray(localStorage.getItem('level'));
 				
@@ -33,6 +40,9 @@
 				spawnY = 500;
 				
 				function die() {
+					//sjs.destroyAll();
+					//start();
+					
 					player.x = spawnX;
 					player.y = spawnY;
 				}
@@ -248,6 +258,7 @@
 					sjs.stoppedBy(x,y);
 					
 				});
+				
 				//Collide JumpPad
 				sjs.onHit("player","jump_pad", function(x,y){
 					if(x.isAboveOf(y) == true){
@@ -261,7 +272,6 @@
 					die();
 				});
 				
-				
 				sjs.onHit("enemy","bottom_screen", function(x,y){
 					sjs.stoppedBy(x,y);
 				});
@@ -270,6 +280,23 @@
 					spawnPoint(flag.x,flag.y);
 					flag.setImage("Images/flag_bad.png");
 					flag.setWidth(29);
+				});
+				
+				sjs.onHit("player","endFlag", function(player,flag) {
+					alert("Congrats! You finished your level!");
+					var submit = confirm("Would you like to submit your level?");
+					
+					if (submit) {
+						window.open("mailto:jaredthebillionaire@outlook.com?subject=New%20Level&body=Here%20is%20the%20level%20code:%0A"+localStorage.level);
+						
+					}
+					window.location = "editor.html";
+					if (localStorage.levelOn = levels) {
+						window.location = "win.html";
+					} else {
+						localStorage.levelOn += 1;
+						play();
+					}
 				});
 				
 				sjs.onHit("laser","platform", function(laser,platform) {
@@ -293,11 +320,16 @@
 				}
 			});
 				
-				
-				
 				sjs.onHit("player","powerUp", function (player, PUp) {
 					canShoot = true;
 					PUp.destroy();
+				});
+				
+				sjs.onHit("player","score", function(player,score) {
+					scoreNum += 10;
+					scoreTXT.setText("Score: " + scoreNum);
+					score.destroy();
+					
 				});
 				
 				//Make the player control the camera
