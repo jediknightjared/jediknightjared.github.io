@@ -10,6 +10,7 @@
 			var boardIMG;
 			var squares;
 			var turn;
+			var over;
 			
 			
 			
@@ -30,6 +31,8 @@
 				
 				turn = X;
 				
+				over = false;
+				
 				turnTXT = new sjs.Text(turn.name + "'s turn.", 20,"black")
 				turnTXT.offset(30,30);
 				
@@ -48,29 +51,32 @@
 					
 					for (var x = 0; x < board[y].length; x++) {
 						squares[y][x].onClick(function () { 
-							var x = 1/160*parseInt(this.style.left)-19/16;
-							var y = 1/160*parseInt(this.style.top)-1/4;
-							if (isBlank(x,y)) {
-								turn(x,y);
-								if (turn == X) {
-									turn = O;
-								} else {
-									turn = X;
+							if (!over) {
+								var x = 1/160*parseInt(this.style.left)-19/16;
+								var y = 1/160*parseInt(this.style.top)-1/4;
+								if (isBlank(x,y)) {
+									turn(x,y);
+									if (turn == X) {
+										turn = O;
+									} else {
+										turn = X;
+									}
+									turnsTaken++;
+									turnTXT.setText(turn.name + "'s turn.");
 								}
-								turnsTaken++;
-								turnTXT.setText(turn.name + "'s turn.");
-							}
-							
-							if (checkEnd()) {
-								setTimeout(function(){
-									alert(checkEnd());
-									turnTXT.destroy();
-									var newGame = new sjs.Button("New Game", function() {
-										sjs.destroyAll();
-										start();
-									});
-									newGame.center().bottom();
-								}, 250);
+
+								if (checkEnd()) {
+
+									setTimeout(function(){
+										alert(checkEnd());
+										turnTXT.destroy();
+										var newGame = new sjs.Button("New Game", function() {
+											sjs.destroyAll();
+											start();
+										});
+										newGame.center().bottom();
+									}, 250);
+								}
 							}
 						});
 					}
