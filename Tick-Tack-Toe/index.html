@@ -62,13 +62,15 @@
 							}
 							
 							if (checkEnd()) {
-								alert(checkEnd());
-								turnTXT.destroy();
-								var newGame = new sjs.Button("New Game", function() {
-									sjs.destroyAll();
-									start();
-								});
-								newGame.center().bottom();
+								setTimeout(function(){
+									alert(checkEnd());
+									turnTXT.destroy();
+									var newGame = new sjs.Button("New Game", function() {
+										sjs.destroyAll();
+										start();
+									});
+									newGame.center().bottom();
+								}, 100);
 							}
 						});
 					}
