@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="http://jediknightjared.github.io/main.css">
+		<link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
+		<title>TickTackToe</title>
+		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<script>
+			var board;
+			var boardIMG;
+			var squares;
+			var turn;
+			
+			
+			
+			function start() {
+				sjs.open("target", 800, 500);
+				
+				boardIMG = new sjs.Image("Images/board.png");
+				boardIMG.x = 180;
+				boardIMG.y = 30;
+				
+				board = [
+				["","",""],
+				["","",""],
+				["","",""]
+				];
+				
+				squares = [];
+				
+				turn = X;
+				
+				turnTXT = new sjs.Text(turn.name + "'s turn.", 20,"black")
+				turnTXT.offset(30,30);
+				
+				turnsTaken = 0;
+				
+				for (var y = 0; y < board.length; y++) {
+					squares[y] = []
+					for (var x = 0; x < board[y].length; x++) {
+						squares[y][x] = new sjs.Image("Images/Blank.png");
+						squares[y][x].x = 160*x+190;
+						squares[y][x].y = 160*y + 40;
+					}
+				}
+				
+				for (var y = 0; y < board.length; y++) {
+					
+					for (var x = 0; x < board[y].length; x++) {
+						squares[y][x].onClick(function () { 
+							var x = 1/160*parseInt(this.style.left)-19/16;
+							var y = 1/160*parseInt(this.style.top)-1/4;
+							if (isBlank(x,y)) {
+								turn(x,y);
+								if (turn == X) {
+									turn = O;
+								} else {
+									turn = X;
+								}
+								turnsTaken++;
+								turnTXT.setText(turn.name + "'s turn.");
+							}
+							
+							if (checkEnd()) {
+								alert(checkEnd());
+								turnTXT.destroy();
+								var newGame = new sjs.Button("New Game", function() {
+									sjs.destroyAll();
+									start();
+								});
+								newGame.center().bottom();
+							}
+						});
+					}
+				}
+			}
+			
+			function checkEnd() {
+				checks = [isX,isO];
+				for (var k = 0; k < 2; k++) {
+					s = checks[k]
+					if (s(0,0) && s(0,1) && s(0,2)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (s(1,0) && s(1,1) && s(1,2)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (s(2,0) && s(2,1) && s(2,2)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (s(0,0) && s(1,0) && s(2,0)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (s(0,1) && s(1,1) && s(2,1)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (s(0,2) && s(1,2) && s(2,2)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (s(0,0) && s(1,1) && s(2,2)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (s(0,2) && s(1,1) && s(2,0)) {
+						console.log(s.name[2]);
+						return s.name[2] + "'s wins!";
+					} else if (turnsTaken >= 9) {
+						return "It's a tie";
+					}
+				}
+			}
+			
+			function X(x,y) {
+				squares[y][x].setImage("Images/X.png")
+			}
+			
+			function O(x,y) {
+				squares[y][x].setImage("Images/O.png")
+			}
+			
+			function Blank(x,y) {
+				squares[y][x].setImage("Images/Blank.png")
+			}
+			
+			function isX(x,y) {
+				return squares[y][x].src == "Images/X.png";
+			}
+			
+			function isO(x,y) {
+				return squares[y][x].src == "Images/O.png";
+			}
+			
+			function isBlank(x,y) {
+				return squares[y][x].src == "Images/Blank.png";
+			}
+		</script>
+		
+	</head>
+	<body onload="start()">
+		<div id="nav">
+			<a href="/"><img src="Images/Logo.png" id="logo"></a>
+		</div>
+		<div id="mainBody">
+			<div id="target" style="border:1px solid black;background-color:white;"></div>
+		</div>
+	</body>
+</html>
