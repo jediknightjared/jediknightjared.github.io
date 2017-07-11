@@ -7,8 +7,11 @@
 		<script>
 			
 			function WIP() {
-				alert("This Game is still a Work In Progress at this present time. Please Play a different Game!");
-				window.location = "/games.html";
+				var pass = prompt("This Game is still a Work In Progress at this present time. Please Play a different Game!");
+				if (pass !== "DEVTEST") {
+					window.location = "/games.html";
+				}
+				
 				
 			}
 			function start(){
