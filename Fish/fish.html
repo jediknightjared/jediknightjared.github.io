@@ -6,6 +6,8 @@
 		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
 		<script>
 			function start(){
+				console.log("New");
+				
 				sjs.open("target",1800,800);
 
 				//Background
@@ -136,7 +138,7 @@
 						localStorage.setItem("size",size);
 						player.accel -= 0.0001;
 
-						if (size >= 10000) {
+						if (size >= 100000) {
 							sjs.destroyAll("enemy");
 							window.location = "win.html";
 						}
