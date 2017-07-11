@@ -136,7 +136,7 @@
 						localStorage.setItem("size",size);
 						player.accel -= 0.0001;
 
-						if (score >= 50) {
+						if (size >= 10000) {
 							sjs.destroyAll("enemy");
 							window.location = "win.html";
 						}
