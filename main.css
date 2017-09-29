@@ -6,7 +6,7 @@ body{
 div#nav{
 	color: white;
 	background-color:#eee;
-	width: 90%;
+	width: 70%;
 	height: 50px;
 	margin: auto;
 	margin-bottom: 10px;
@@ -15,7 +15,7 @@ div#nav{
 
 div#mainBody{
 	background-color: #eee;
-	width: 90%;
+	width: 70%;
 	margin: auto;
 	padding: 20px
 }
