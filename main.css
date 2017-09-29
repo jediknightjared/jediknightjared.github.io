@@ -1,19 +1,20 @@
 body{
 	color: #ff0;
-	background-color: #0f0;
+	background-color: #222;
 }
 
 div#nav{
 	color: white;
-	background-color:#f0f;
+	background-color:#eee;
 	width: 90%;
 	height: 50px;
 	margin: auto;
 	margin-bottom: 10px;
+	padding: 10px;
 }
 
 div#mainBody{
-	background-color: #00f;
+	background-color: #eee;
 	width: 90%;
 	margin: auto;
 	padding: 20px
