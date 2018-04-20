@@ -58,7 +58,7 @@ function click(col) {
       selector.classList.remove("available");
     }
     setTimeout(function() {
-      alert(winner + " win's!");
+      alert(winner + " wins!");
     }, 1000)
 
     //console.log(winner + " win's!");
