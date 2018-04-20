@@ -15,6 +15,7 @@ function reset() {
       click(selector.id);
     }
     selector.classList.add("available");
+    selector.classList.remove("black");
     selector.classList.add(turn);
   }
 
