@@ -1,0 +1,59 @@
+body {
+  background-color: #00aacc
+}
+
+h2 {
+  color: white;
+}
+
+table#gameTable {
+  background-color: black;
+}
+
+table#gameTable td {
+  width: 50px;
+  height: 50px;
+  border: black 1px solid;
+  background-color: white;
+  padding: 0;
+}
+
+table#selectorTable {
+  border: none;
+  background-color: none;
+}
+
+table#selectorTable td {
+  width: 50px;
+  height: 50px;
+  border: transparent 1px solid;
+  border-radius: 100%;
+  padding: 0;
+}
+
+table#selectorTable td.available {
+  border: black 1px solid;
+}
+
+table#selectorTable td.available.red:hover {
+  background-color: red;
+}
+
+table#selectorTable td.available.black:hover {
+  background-color: black;
+}
+
+div.red, div.black {
+  border-radius: 100%;
+  width: 46px;
+  height: 46px;
+  margin: 2px;
+}
+
+div.red {
+  background-color: red;
+}
+
+div.black {
+  background-color: black;
+}
