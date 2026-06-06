@@ -1,0 +1,30 @@
+{
+  "log": [
+    {
+      "date": "2026-06-06",
+      "label": "June 2026",
+      "title": "Portfolio Overhaul",
+      "body": "I am starting this portfolio to display my skills as a software engineer and display the growth I am experiencing as I develop my skills. Feel free to come along for my journey!"
+    },
+    {
+      "date": "2026-05-04",
+      "label": "May 2026",
+      "title": "FamilySearch Internship",
+      "body": "I started an internship with FamilySearch as a Quality Assurance Engineer! I have been learning how to work on a SD team and write effective tests for a large codebase. I am excited to continue learning and growing in this role."
+    }
+  ],
+  "goals": [
+    {
+      "title": "Learn and improve full-stack development skills",
+      "body": "I am learning modern front-end frameworks like React to complement my back-end experience."
+    },
+    {
+      "title": "Increase efficiency through effective use of AI",
+      "body": "Practice using AI models to accelerate my learning and development process."
+    },
+    {
+      "title": "Graduate with a BAS in Software Engineering from Ensign College",
+      "body": "I am currently studying at Ensign College and expect to graduate in 2027. "
+    }
+  ]
+}
