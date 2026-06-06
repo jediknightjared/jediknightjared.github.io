@@ -556,7 +556,7 @@ input[type="text"] {
   .site-nav,
   .section-shell,
   div#mainBody {
-    width: min(100% - 1rem, 1120px);
+    width: min(calc(100% - 1rem), 1120px);
   }
 
   .nav-links a {
