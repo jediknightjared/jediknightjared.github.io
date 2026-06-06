@@ -1,37 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Playable browser games and experiments by Jared.">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <link id="page_favicon" href="/Images/Logo.ico" rel="icon" type="image/x-icon">
+    <script src="/nav.js" defer></script>
+    <title>Games | Jared</title>
+  </head>
 
-<head>
-  <link rel="stylesheet" type="text/css" href="main.css">
-  <link id="page_favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASUlEQVQ4T+2TMQ4AMAgC4f+PtjG2TjLRUVbNaQQJIGCICQjBILKcUjOqYwE/bmC4WC7YAO3yTYFoIPFyMO/QMVpAPsuoPqJj4wHvRDQBPTkovgAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon">
-  <script src="/nav.js"></script>
-  <title>Games - Jared's Websites</title>
-</head>
+  <body>
+    <header id="nav" class="site-nav"></header>
 
-<body>
-  <div id="nav">
-    <a href="/"><img src="Images/Logo.png" id="logo"></a>
-  </div>
-  <div id="mainBody">
-    <table style="margin: auto; width:60%;">
-      <tr>
-        <td>Fish</td>
-        <td>Pong</td>
-      </tr>
-      <tr>
-        <td>
-          <a href="Fish/index.html">
-            <img src="Images/bluefish_right.png" width="400" height="400">
+    <main>
+      <section class="page-hero section-shell">
+        <p class="eyebrow">Playable projects</p>
+        <h1>Games and experiments</h1>
+        <p>
+          A growing collection of browser games, prototypes, and interactive ideas.
+        </p>
+      </section>
+
+      <section class="section-shell game-grid" aria-label="Games">
+        <article class="media-card">
+          <a href="/Fish/index.html" class="media-link" aria-label="Play Fish">
+            <img src="/Images/bluefish_right.png" alt="Blue fish game character">
+            <div>
+              <h2>Fish</h2>
+              <p>Swim through a small arcade-style adventure.</p>
+            </div>
           </a>
-        </td>
-        <td>
-          <a href="Pong/index.html">
-            <img src="Images/pizza.png" width="400" height="400">
-          </a>
-        </td>
-      </tr>
-    </table>
-  </div>
-</body>
+        </article>
 
+        <article class="media-card">
+          <a href="/Pong/index.html" class="media-link" aria-label="Play Pong">
+            <img src="/Images/pizza.png" alt="Pizza ball from the Pong game">
+            <div>
+              <h2>Pong</h2>
+              <p>A playful take on the classic paddle game.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="media-card">
+          <a href="/Platform/index.html" class="media-link" aria-label="Play Platform">
+            <img src="/Platform/Images/r_idle.png" alt="Platform game character">
+            <div>
+              <h2>Platform</h2>
+              <p>A platformer experiment with levels, hazards, and movement.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="media-card">
+          <a href="/Tic-Tac-Toe/index.html" class="media-link" aria-label="Play Tic Tac Toe">
+            <img src="/Tic-Tac-Toe/Images/Logo.png" alt="Tic Tac Toe logo">
+            <div>
+              <h2>Tic Tac Toe</h2>
+              <p>A quick classic strategy game for the browser.</p>
+            </div>
+          </a>
+        </article>
+      </section>
+    </main>
+  </body>
 </html>
